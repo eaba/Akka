@@ -26,7 +26,7 @@ partial class Build : NukeBuild
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
 
-    public static int Main () => Execute<Build>(x => x.Compile);
+    public static int Main () => Execute<Build>(x => x.CoreTests);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
@@ -68,15 +68,200 @@ partial class Build : NukeBuild
                 .EnableNoRestore());
         });
 
-    Target Tests => _ => _
-        .Description("Runs all the unit tests")
+    Target ApiTests => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            var pr = Solution.GetProject("Akka.API.Tests");
+            foreach (var fw in pr.GetTargetFrameworks())
+            {
+                Information($"Running tests from {fw}");
+                DotNetTest(c => c
+                       .SetProjectFile(pr)
+                       .SetConfiguration(Configuration.ToString())
+                       .SetFramework(fw)
+                       .SetResultsDirectory(OutputTests)
+                       .SetProcessWorkingDirectory(Directory.GetParent(pr).FullName)
+                       .SetLoggers("trx")
+                       .SetVerbosity(verbosity: DotNetVerbosity.Normal)
+                       .EnableNoBuild());
+            }
+        });
+    Target ClusterTests => _ => _
         .DependsOn(Compile)
         .Executes(() =>
         {
             var projects = RootDirectory
-             .GlobFiles("src/**/*.Tests.*sproj", "src/**/Akka.Streams.Tests.TCK.csproj",
-             "src/**/*.Tests.MultiNode.csproj")
-             .Where(x=> !x.Name.Contains("Cluster") && !x.Name.Contains("MultiNode"));
+             .GlobFiles("src/**/Akka.Cluster.Tests.csproj", "src/**/Akka.Cluster.*.Tests.csproj");
+            
+            foreach (var project in projects)
+            {
+                Information($"Running tests from {project}");
+                DotNetTest(c => c
+                       .SetProjectFile(project)
+                       .SetConfiguration(Configuration.ToString())
+                       .SetFramework("net6.0")
+                       .SetResultsDirectory(OutputTests)
+                       .SetProcessWorkingDirectory(Directory.GetParent(project).FullName)
+                       .SetLoggers("trx")
+                       .SetVerbosity(verbosity: DotNetVerbosity.Normal)
+                       .EnableNoBuild());
+            }
+        });
+    Target MultiNodeTests => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            var projects = RootDirectory
+             .GlobFiles("src/**/*.Tests.MultiNode.csproj");
+            
+            foreach (var project in projects)
+            {
+                Information($"Running tests from {project}");
+                DotNetTest(c => c
+                       .SetProjectFile(project)
+                       .SetConfiguration(Configuration.ToString())
+                       .SetFramework("net6.0")
+                       .SetResultsDirectory(OutputTests)
+                       .SetProcessWorkingDirectory(Directory.GetParent(project).FullName)
+                       .SetLoggers("trx")
+                       .SetVerbosity(verbosity: DotNetVerbosity.Normal)
+                       .EnableNoBuild());
+            }
+        });
+    Target CoreTestKitTests => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            var project = Solution.GetProject("Akka.TestKit.Tests");
+            Information($"Running tests from {project}");
+            DotNetTest(c => c
+                   .SetProjectFile(project)
+                   .SetConfiguration(Configuration.ToString())
+                   .SetFramework("net6.0")
+                   .SetResultsDirectory(OutputTests)
+                   .SetProcessWorkingDirectory(Directory.GetParent(project).FullName)
+                   .SetLoggers("trx")
+                   .SetVerbosity(verbosity: DotNetVerbosity.Normal)
+                   .EnableNoBuild());
+        });
+    Target CoreTests => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            var project = Solution.GetProject("Akka.Tests");
+            Information($"Running tests from {project}");
+            DotNetTest(c => c
+                   .SetProjectFile(project)
+                   .SetConfiguration(Configuration.ToString())
+                   .SetFramework("net6.0")
+                   .SetResultsDirectory(OutputTests)
+                   .SetProcessWorkingDirectory(Directory.GetParent(project).FullName)
+                   .SetLoggers("trx")
+                   .SetVerbosity(verbosity: DotNetVerbosity.Normal)
+                   .EnableNoBuild());
+        });
+    Target PersistenceTests => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            var projects = RootDirectory
+             .GlobFiles("src/**/Akka.Persistence.*Tests.csproj");
+            foreach (var project in projects)
+            {
+                Information($"Running tests from {project}");
+                DotNetTest(c => c
+                       .SetProjectFile(project)
+                       .SetConfiguration(Configuration.ToString())
+                       .SetFramework("net6.0")
+                       .SetResultsDirectory(OutputTests)
+                       .SetProcessWorkingDirectory(Directory.GetParent(project).FullName)
+                       .SetLoggers("trx")
+                       .SetVerbosity(verbosity: DotNetVerbosity.Normal)
+                       .EnableNoBuild());
+            }
+        });
+    
+    Target RemoteTests => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            var projects = RootDirectory
+             .GlobFiles("src/**/Akka.Remote.*Tests*.csproj").
+             Where(x=> !x.Name.Contains("Performance") && !x.Name.Contains("MultiNode"));
+            foreach (var project in projects)
+            {
+                Information($"Running tests from {project}");
+                DotNetTest(c => c
+                       .SetProjectFile(project)
+                       .SetConfiguration(Configuration.ToString())
+                       .SetFramework("net6.0")
+                       .SetResultsDirectory(OutputTests)
+                       .SetProcessWorkingDirectory(Directory.GetParent(project).FullName)
+                       .SetLoggers("trx")
+                       .SetVerbosity(verbosity: DotNetVerbosity.Normal)
+                       .EnableNoBuild());
+            }
+        });
+    
+    Target DiscoveryTests => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            var project = Solution.GetProject("Akka.Discovery.Tests"); 
+            Information($"Running tests from {project}");
+            DotNetTest(c => c
+                   .SetProjectFile(project)
+                   .SetConfiguration(Configuration.ToString())
+                   .SetFramework("net6.0")
+                   .SetResultsDirectory(OutputTests)
+                   .SetProcessWorkingDirectory(Directory.GetParent(project).FullName)
+                   .SetLoggers("trx")
+                   .SetVerbosity(verbosity: DotNetVerbosity.Normal)
+                   .EnableNoBuild());
+        });
+    
+    Target DocsTests => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            var project = Solution.GetProject("Akka.Docs.Tests"); 
+            Information($"Running tests from {project}");
+            DotNetTest(c => c
+                   .SetProjectFile(project)
+                   .SetConfiguration(Configuration.ToString())
+                   .SetFramework("net6.0")
+                   .SetResultsDirectory(OutputTests)
+                   .SetProcessWorkingDirectory(Directory.GetParent(project).FullName)
+                   .SetLoggers("trx")
+                   .SetVerbosity(verbosity: DotNetVerbosity.Normal)
+                   .EnableNoBuild());
+        });
+    
+    Target CoordinationTests => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            var project = Solution.GetProject("Akka.Coordination.Tests"); 
+            Information($"Running tests from {project}");
+            DotNetTest(c => c
+                   .SetProjectFile(project)
+                   .SetConfiguration(Configuration.ToString())
+                   .SetFramework("net6.0")
+                   .SetResultsDirectory(OutputTests)
+                   .SetProcessWorkingDirectory(Directory.GetParent(project).FullName)
+                   .SetLoggers("trx")
+                   .SetVerbosity(verbosity: DotNetVerbosity.Normal)
+                   .EnableNoBuild());
+        });
+    
+    Target StreamTests => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            var projects = RootDirectory
+             .GlobFiles("src/**/Akka.Streams.*Tests*.csproj").
+             Where(x=> !x.Name.Contains("Performance"));
             foreach (var project in projects)
             {
                 Information($"Running tests from {project}");

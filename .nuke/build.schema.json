@@ -71,10 +71,20 @@
           "items": {
             "type": "string",
             "enum": [
+              "ApiTests",
               "Clean",
+              "ClusterTests",
               "Compile",
+              "CoordinationTests",
+              "CoreTestKitTests",
+              "CoreTests",
+              "DiscoveryTests",
+              "DocsTests",
+              "MultiNodeTests",
+              "PersistenceTests",
+              "RemoteTests",
               "Restore",
-              "Tests"
+              "StreamTests"
             ]
           }
         },
@@ -88,10 +98,20 @@
           "items": {
             "type": "string",
             "enum": [
+              "ApiTests",
               "Clean",
+              "ClusterTests",
               "Compile",
+              "CoordinationTests",
+              "CoreTestKitTests",
+              "CoreTests",
+              "DiscoveryTests",
+              "DocsTests",
+              "MultiNodeTests",
+              "PersistenceTests",
+              "RemoteTests",
               "Restore",
-              "Tests"
+              "StreamTests"
             ]
           }
         },

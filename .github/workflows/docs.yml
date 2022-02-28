@@ -9,12 +9,12 @@
 #
 #     - To trigger manual generation invoke:
 #
-#         nuke --generate-configuration GitHubActions_pr_validation --host GitHubActions
+#         nuke --generate-configuration GitHubActions_docs --host GitHubActions
 #
 # </auto-generated>
 # ------------------------------------------------------------------------------
 
-name: pr_validation
+name: docs
 
 on:
   push:
@@ -45,8 +45,8 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
-      - name: Run './build.cmd CoreTests'
-        run: ./build.cmd CoreTests
+      - name: Run './build.cmd DocsTests'
+        run: ./build.cmd DocsTests
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
   ubuntu-latest:
@@ -67,7 +67,7 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
-      - name: Run './build.cmd CoreTests'
-        run: ./build.cmd CoreTests
+      - name: Run './build.cmd DocsTests'
+        run: ./build.cmd DocsTests
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}

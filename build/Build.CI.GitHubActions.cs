@@ -9,13 +9,124 @@ using Nuke.Common.CI.GitHubActions.Configuration;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 
-[CustomGitHubActions("pr_validation",
+[CustomGitHubActions("api",
     GitHubActionsImage.WindowsLatest,
     GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
-    InvokedTargets = new[] { nameof(Tests) },
+    InvokedTargets = new[] { nameof(ApiTests) },
+    PublishArtifacts = true,
+    EnableGitHubContext = true)
+]
+
+[CustomGitHubActions("cluster",
+    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
+    AutoGenerate = true,
+    OnPushBranches = new[] { "master", "dev" },
+    OnPullRequestBranches = new[] { "master", "dev" },
+    InvokedTargets = new[] { nameof(ClusterTests) },
+    PublishArtifacts = true,
+    EnableGitHubContext = true)
+]
+
+[CustomGitHubActions("remote",
+    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
+    AutoGenerate = true,
+    OnPushBranches = new[] { "master", "dev" },
+    OnPullRequestBranches = new[] { "master", "dev" },
+    InvokedTargets = new[] { nameof(RemoteTests) },
+    PublishArtifacts = true,
+    EnableGitHubContext = true)
+]
+
+[CustomGitHubActions("streams",
+    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
+    AutoGenerate = true,
+    OnPushBranches = new[] { "master", "dev" },
+    OnPullRequestBranches = new[] { "master", "dev" },
+    InvokedTargets = new[] { nameof(StreamTests) },
+    PublishArtifacts = true,
+    EnableGitHubContext = true)
+]
+
+[CustomGitHubActions("multi_node",
+    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
+    AutoGenerate = true,
+    OnPushBranches = new[] { "master", "dev" },
+    OnPullRequestBranches = new[] { "master", "dev" },
+    InvokedTargets = new[] { nameof(MultiNodeTests) },
+    PublishArtifacts = true,
+    EnableGitHubContext = true)
+]
+
+[CustomGitHubActions("persistence",
+    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
+    AutoGenerate = true,
+    OnPushBranches = new[] { "master", "dev" },
+    OnPullRequestBranches = new[] { "master", "dev" },
+    InvokedTargets = new[] { nameof(PersistenceTests) },
+    PublishArtifacts = true,
+    EnableGitHubContext = true)
+]
+
+
+[CustomGitHubActions("discovery",
+    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
+    AutoGenerate = true,
+    OnPushBranches = new[] { "master", "dev" },
+    OnPullRequestBranches = new[] { "master", "dev" },
+    InvokedTargets = new[] { nameof(DiscoveryTests) },
+    PublishArtifacts = true,
+    EnableGitHubContext = true)
+]
+
+[CustomGitHubActions("coordination",
+    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
+    AutoGenerate = true,
+    OnPushBranches = new[] { "master", "dev" },
+    OnPullRequestBranches = new[] { "master", "dev" },
+    InvokedTargets = new[] { nameof(CoordinationTests) },
+    PublishArtifacts = true,
+    EnableGitHubContext = true)
+]
+
+[CustomGitHubActions("docs",
+    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
+    AutoGenerate = true,
+    OnPushBranches = new[] { "master", "dev" },
+    OnPullRequestBranches = new[] { "master", "dev" },
+    InvokedTargets = new[] { nameof(DocsTests) },
+    PublishArtifacts = true,
+    EnableGitHubContext = true)
+]
+
+[CustomGitHubActions("core",
+    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
+    AutoGenerate = true,
+    OnPushBranches = new[] { "master", "dev" },
+    OnPullRequestBranches = new[] { "master", "dev" },
+    InvokedTargets = new[] { nameof(CoreTests) },
+    PublishArtifacts = true,
+    EnableGitHubContext = true)
+]
+
+[CustomGitHubActions("test_kits",
+    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
+    AutoGenerate = true,
+    OnPushBranches = new[] { "master", "dev" },
+    OnPullRequestBranches = new[] { "master", "dev" },
+    InvokedTargets = new[] { nameof(CoreTestKitTests) },
     PublishArtifacts = true,
     EnableGitHubContext = true)
 ]
