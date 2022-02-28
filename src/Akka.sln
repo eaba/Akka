@@ -61,11 +61,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protobuf", "Protobuf", "{98
 		protobuf\WireFormats.proto = protobuf\WireFormats.proto
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{10C5B1E8-15B5-4EB3-81AE-1FC054FE1305}"
-	ProjectSection(SolutionItems) = preProject
-		..\build.fsx = ..\build.fsx
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contrib", "Contrib", "{588C1513-FAB6-42C3-B6FC-3485F13620CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestKits", "TestKits", "{7625FD95-4B2C-4A5B-BDD5-94B1493FAC8E}"
