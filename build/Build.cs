@@ -75,7 +75,8 @@ partial class Build : NukeBuild
         {
             var projects = RootDirectory
              .GlobFiles("src/**/*.Tests.*sproj", "src/**/Akka.Streams.Tests.TCK.csproj",
-             "src/**/*.Tests.MultiNode.csproj", "src/examples/**");
+             "src/**/*.Tests.MultiNode.csproj")
+             .Where(x=> !x.Name.Contains("Cluster") && !x.Name.Contains("MultiNode"));
             foreach (var project in projects)
             {
                 Information($"Running tests from {project}");
