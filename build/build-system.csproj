@@ -15,4 +15,8 @@
     <PackageDownload Include="GitVersion.Tool" Version="[5.8.0]" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="..\.github\workflows\pr_validation.yml" />
+  </ItemGroup>
+
 </Project>

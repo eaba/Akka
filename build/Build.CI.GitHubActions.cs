@@ -11,7 +11,6 @@ using Nuke.Common.Utilities;
 
 [CustomGitHubActions("api",
     GitHubActionsImage.WindowsLatest,
-    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
@@ -22,7 +21,6 @@ using Nuke.Common.Utilities;
 
 [CustomGitHubActions("cluster",
     GitHubActionsImage.WindowsLatest,
-    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
@@ -33,7 +31,6 @@ using Nuke.Common.Utilities;
 
 [CustomGitHubActions("remote",
     GitHubActionsImage.WindowsLatest,
-    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
@@ -44,7 +41,6 @@ using Nuke.Common.Utilities;
 
 [CustomGitHubActions("streams",
     GitHubActionsImage.WindowsLatest,
-    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
@@ -55,7 +51,6 @@ using Nuke.Common.Utilities;
 
 [CustomGitHubActions("multi_node",
     GitHubActionsImage.WindowsLatest,
-    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
@@ -66,7 +61,6 @@ using Nuke.Common.Utilities;
 
 [CustomGitHubActions("persistence",
     GitHubActionsImage.WindowsLatest,
-    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
@@ -78,7 +72,6 @@ using Nuke.Common.Utilities;
 
 [CustomGitHubActions("discovery",
     GitHubActionsImage.WindowsLatest,
-    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
@@ -89,7 +82,6 @@ using Nuke.Common.Utilities;
 
 [CustomGitHubActions("coordination",
     GitHubActionsImage.WindowsLatest,
-    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
@@ -100,7 +92,6 @@ using Nuke.Common.Utilities;
 
 [CustomGitHubActions("docs",
     GitHubActionsImage.WindowsLatest,
-    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
@@ -111,7 +102,6 @@ using Nuke.Common.Utilities;
 
 [CustomGitHubActions("core",
     GitHubActionsImage.WindowsLatest,
-    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
@@ -122,7 +112,6 @@ using Nuke.Common.Utilities;
 
 [CustomGitHubActions("test_kits",
     GitHubActionsImage.WindowsLatest,
-    GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
